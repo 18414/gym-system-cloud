@@ -1,0 +1,40 @@
+---
+- name: Add Docker repository
+  get_url: 
+    url: https://download.docker.com/linux/centos/docker-ce.repo  
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: 0644
+    
+- name: Install Docker prerequisite
+  yum: 
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+
+- name: Install Docker 
+  yum: 
+    name: "{{ item }}"
+    state: present
+  when: ansible_distribution == "CentOS"
+  with_items: 
+    - docker-ce
+    - dokcer-python
+
+- name: add Docker group
+  group: name=docker state=present
+
+- name: Add centos user to Docker group
+  user: name=centos groups=docker append=yes
+
+- name: Start docker service
+  service: name=docker state=started
+
+- name: Get Docker info
+  shell: docker info
+  register: docker_info
+  changed_when: false
+ 
+  
