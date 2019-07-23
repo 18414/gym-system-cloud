@@ -1,2 +1,10 @@
 ---
 # vars file for gym-system-cloud
+my_region: us-east-2
+instance_t: t2.micro
+s_key: aws_final
+my_image: ami-0f2b4fc905b0bd1f1
+my_sg: Newsc
+my_sub: subnet-0d79430f266ac41a9
+pub_ip: yes
+i_tag: gym_system
