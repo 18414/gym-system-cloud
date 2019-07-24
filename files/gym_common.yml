@@ -1,9 +1,10 @@
 ---
 - name: Provision EC2 instance and launch Docker container
+  become: true 
   hosts: localhost
-  vars_prompt:
-    - name: hip
-      prompt: Enter the IP of server
+  #vars_prompt:
+  #  - name: hip
+  #    prompt: Enter the IP of server
 
   vars_files:
     - /home/ansible/gym-system-cloud/files/doc_pass.yml

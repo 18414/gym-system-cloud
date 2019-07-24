@@ -8,7 +8,7 @@
 
 - name: Launch container App1
   docker_container: 
-    name: App1
+    name: app1
     state: started
     image: "bmahajan/lb:app2new"
     tty: yes
@@ -16,16 +16,13 @@
     pull: yes
     ports: 
       - "8081:80"
-- name: Integrate RDS with PHP
-  shell: docker exec app1 sed -i 's/127.0.0.1/gym-management-system.czrdtrac0wnc.us-east-2.rds.amazonaws.com/g; s/root/bhushan/g; s/""/"ganesha123"/g'  /opt/lampp/htdocs/includes/db_connect.php
 
 - name: Name to home page
   shell: docker exec app1 sed -i '5i\<li>App1</li>\ ' /opt/lampp/htdocs/includes/footer.php
 
-###################################
 - name: Launch container App2
   docker_container:
-    name: App2
+    name: app2
     state: started
     image: "bmahajan/lb:app2new"
     tty: yes
@@ -34,8 +31,6 @@
     ports: 
       - "8082:80"
     
-- name: Integrate RDS with PHP
-  shell: docker exec app2 sed -i 's/127.0.0.1/gym-management-system.czrdtrac0wnc.us-east-2.rds.amazonaws.com/g; s/root/bhushan/g; s/""/"ganesha123"/g'  /opt/lampp/htdocs/includes/db_connect.php
 
 - name: Name to home page
   shell: docker exec app2 sed -i '5i\<li>App2</li>\ ' /opt/lampp/htdocs/includes/footer.php
@@ -66,7 +61,6 @@
     var: ext_ip
 
 - name: Configure Nginx
-  #shell: docker exec nginx sed  -i -e 's/3.17.60.70\b/{{ hip }}/g' /etc/nginx/nginx.conf
   shell: docker exec nginx sed  -i -e 's/{{ item }}\b/{{ hip }}/g' /etc/nginx/nginx.conf
   with_items:
     - "{{ ext_ip.stdout }}"
