@@ -21,7 +21,7 @@
   when: ansible_distribution == "CentOS"
   with_items: 
     - docker-ce
-    - dokcer-python
+    - docker-python
 
 - name: add Docker group
   group: name=docker state=present
