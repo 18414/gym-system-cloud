@@ -1,9 +1,4 @@
 ---
-  - hosts: all
-    become: yes
-    vars_files: 
-      - /home/ansible/install_docker_group_vars/docker_pass.yml
-    tasks:
       - name: "add docker repository"
         get_url:
           url: https://download.docker.com/linux/centos/docker-ce.repo
@@ -62,4 +57,3 @@
         register: docker_info
         changed_when: False 
 
-      - import_tasks: docker_launch_nginx_lb_v1.yml
